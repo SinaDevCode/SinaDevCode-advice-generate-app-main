@@ -4,7 +4,7 @@
 
 This project is a solution to the [Advice Generator App] challenge from frontendMentor, built using ReactJs, Tailwind, Axios, and Vite.
 
-![Design preview for the Crowdfunding product page coding challenge](./design/desktop-preview.jpg)
+![Design preview for the Crowdfunding product page coding challenge](/design/desktop-preview.jpg)
 
 ## Technologies Used
 
