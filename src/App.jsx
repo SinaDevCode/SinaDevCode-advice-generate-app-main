@@ -9,7 +9,6 @@ export default function App() {
 			const advice = await axios.get("https://api.adviceslip.com/advice");
 			const object = await advice.data;
 			setAdvice(object);
-			console.log(object);
 		};
 		response().catch((err) => console.log("Oops! something went wrong"));
 	}
