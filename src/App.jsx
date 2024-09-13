@@ -2,31 +2,31 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function App() {
-	const [adviceId, setAdviceId] = useState("");
-	const [adviceText, setAdviceText] = useState("");
+	const [advice, setAdvice] = useState(null);
 
-	const [adviceCounter, setAdviceCounter] = useState(0);
-
-	useEffect(() => {
+	function fetchAdvice() {
 		const response = async () => {
 			const advice = await axios.get("https://api.adviceslip.com/advice");
 			const object = await advice.data;
-			setAdviceId(object.slip.id);
-			setAdviceText(object.slip.advice);
+			setAdvice(object);
+			console.log(object);
 		};
-
 		response().catch((err) => console.log("Oops! something went wrong"));
-	}, [adviceCounter]);
+	}
+
+	useEffect(() => {
+		fetchAdvice();
+	}, []);
 
 	return (
 		<div className="flex justify-center items-center w-full h-screen bg-DarkBlue">
 			<div className="min-w-80 max-w-96 flex flex-col justify-center items-center gap-4 bg-DarkGrayishBlue px-8 py-12 text-LightCyan text-center relative rounded-lg">
-				{adviceId && adviceText ? (
+				{advice ? (
 					<>
 						<h1 className="text-xs font-normal text-NeonGreen">
-							ADVICE {`#${adviceId}`}
+							ADVICE {`#${advice.slip.id}`}
 						</h1>
-						<p className="text-xl font-bold pb-4">{`"${adviceText}"`}</p>
+						<p className="text-xl font-bold pb-4">{`"${advice.slip.advice}"`}</p>
 					</>
 				) : (
 					<h1 className="font-bold text-xl">Loading...</h1>
@@ -42,11 +42,7 @@ export default function App() {
 					className="flex sm:hidden"
 				/>
 				<button
-					onClick={() => {
-						setAdviceCounter(adviceCounter + 1);
-						setAdviceId(null);
-						setAdviceText(null);
-					}}
+					onClick={fetchAdvice}
 					className="bg-NeonGreen flex items-center justify-center p-3 rounded-full absolute -bottom-6 hover:shadow-[0_0_24px] hover:shadow-NeonGreen transition"
 				>
 					<svg
